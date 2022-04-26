@@ -24,3 +24,16 @@ python -c 'from django.core.management.utils import get_random_secret_key; \
 ```
 python ./manage.py runserver
 ```
+
+### React
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+In the project directory, you can run:
+
+`npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+

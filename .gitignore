@@ -1,4 +1,4 @@
-# Created by https://www.gitignore.io
+################################ Django ################################
 
 ### OSX ###
 .DS_Store
@@ -88,4 +88,7 @@ local_settings.py
 .env
 db.sqlite3
 
+################################ Other ################################
 secretkey.txt
+
+#
