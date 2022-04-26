@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('../secretkey.txt') as f:
+with open('../secretkey.txt', encoding='UTF-8') as f:
     SECRET_KEY = f.read()
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'MyStudyPlanAPI.apps.MyStudyPlanAPIConfig'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
