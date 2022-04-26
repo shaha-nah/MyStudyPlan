@@ -21,5 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     re_path(r'^module$', views.moduleApi),
-    re_path(r'^module/([0-9]+)$', views.moduleApi)
+    re_path(r'^module/([0-9]+)$', views.moduleApi),
+
+    re_path(r'^class$', views.scheduleApi),
+    re_path(r'^class/([0-9]+)$', views.scheduleApi),
 ]
