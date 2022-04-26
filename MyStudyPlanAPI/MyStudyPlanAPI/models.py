@@ -27,3 +27,18 @@ class Chapters(models.Model):
         default = 'New'
     )
     ModuleId = models.IntegerField()
+
+class Tasks(models.Model):
+    TaskId = models.AutoField(primary_key = True)
+    TaskName = models.CharField(max_length=100)
+    TaskStatus = models.CharField(
+        max_length = 20,
+        choices = (('New', 'New'), ('In Progress', 'In Progress'), ('Completed', 'Completed')),
+        default = 'New'
+    )
+    TaskType = models.CharField(
+        max_length = 10,
+        choices = (('Class', 'Class'), ('Tutorial', 'Tutorial')),
+        default = 'Class'
+    )
+    ChapterId = models.IntegerField()

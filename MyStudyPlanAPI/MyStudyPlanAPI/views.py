@@ -1,12 +1,12 @@
+import json
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 
-from MyStudyPlanAPI.models import Modules, Schedules, Chapters
-from MyStudyPlanAPI.serializers import ModuleSerializer, ScheduleSerializer, ChapterSerializer
+from MyStudyPlanAPI.models import Modules, Schedules, Chapters, Tasks
+from MyStudyPlanAPI.serializers import ModuleSerializer, ScheduleSerializer, ChapterSerializer, TaskSerializer
 
-# Module
 @csrf_exempt
 def moduleApi(request, id = 0):
     if request.method == 'GET':
@@ -36,7 +36,6 @@ def moduleApi(request, id = 0):
         module.delete()
         return JsonResponse("Module deleted!", safe = False)
 
-# Schedule
 @csrf_exempt
 def scheduleApi(request, id = 0):
     if request.method == 'GET':
@@ -66,7 +65,6 @@ def scheduleApi(request, id = 0):
         schedule.delete()
         return JsonResponse("Class deleted!", safe = False)
 
-# Chapter
 @csrf_exempt
 def chapterApi(request, id = 0):
     if request.method == 'GET':
@@ -88,10 +86,39 @@ def chapterApi(request, id = 0):
         chapters_serializer = ChapterSerializer(chapter, data = chapter_data)
         if chapters_serializer.is_valid():
             chapters_serializer.save()
-            return JsonResponse("Chapter updated", safe = False)
+            return JsonResponse("Chapter updated!", safe = False)
         return JsonResponse("An error occured!")
     
     elif request.method == 'DELETE':
         chapter = Chapters.objects.get(ChapterId = id)
         chapter.delete()
-        return JsonResponse("Deleted", safe = False)
+        return JsonResponse("Chapter deleted!", safe = False)
+
+@csrf_exempt
+def taskApi(request, id = 0):
+    if request.method == 'GET':
+        tasks = Tasks.objects.all()
+        tasks_serializer = TaskSerializer(tasks, many=True)
+        return JsonResponse(tasks_serializer.data, safe=False)
+    
+    elif request.method == 'POST':
+        task_data = JSONParser().parse(request)
+        tasks_serializer = TaskSerializer(data = task_data)
+        if tasks_serializer.is_valid():
+            tasks_serializer.save()
+            return JsonResponse("Task Added!", safe = False)
+        return JsonResponse("An error occured!", safe = False)
+    
+    elif request.method == 'PUT':
+        task_data = JSONParser().parse(request)
+        task = Tasks.objects.get(TaskId = task_data['TaskId'])
+        tasks_serializer = TaskSerializer(task, data = task_data)
+        if tasks_serializer.is_valid():
+            tasks_serializer.save()
+            return JsonResponse("Task updated!", safe = False)
+        return JsonResponse("An error occured!")
+    
+    elif request.method == 'DELETE':
+        task = Tasks.objects.get(TaskId = id)
+        task.delete()
+        return JsonResponse("Task deleted!", safe = False)

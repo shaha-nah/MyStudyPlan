@@ -1,6 +1,6 @@
 from dataclasses import fields
 from rest_framework import serializers
-from .models import Modules, Schedules, Chapters
+from .models import Modules, Schedules, Chapters, Tasks
 
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +17,7 @@ class ChapterSerializer(serializers.ModelSerializer):
         model = Chapters
         fields = ('ChapterId', 'ChapterName', 'ChapterStatus', 'ModuleId')
 
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tasks
+        fields = ('TaskId', 'TaskName', 'TaskStatus', 'TaskType', 'ChapterId')

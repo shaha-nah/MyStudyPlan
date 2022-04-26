@@ -25,7 +25,10 @@ urlpatterns = [
 
     re_path(r'^class$', views.scheduleApi),
     re_path(r'^class/([0-9]+)$', views.scheduleApi),
-    
+
     re_path(r'^chapter$', views.chapterApi),
-    re_path(r'^chapter/([0-9]+)$', views.chapterApi)
+    re_path(r'^chapter/([0-9]+)$', views.chapterApi),
+
+    re_path(r'^task$', views.taskApi),
+    re_path(r'^task/([0-9]+)$', views.taskApi)
 ]
