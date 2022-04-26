@@ -3,8 +3,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 
-from MyStudyPlanAPI.models import Modules, Schedules
-from MyStudyPlanAPI.serializers import ModuleSerializer, ScheduleSerializer
+from MyStudyPlanAPI.models import Modules, Schedules, Chapters
+from MyStudyPlanAPI.serializers import ModuleSerializer, ScheduleSerializer, ChapterSerializer
 
 # Module
 @csrf_exempt
@@ -36,7 +36,7 @@ def moduleApi(request, id = 0):
         module.delete()
         return JsonResponse("Module deleted!", safe = False)
 
-#Schedule
+# Schedule
 @csrf_exempt
 def scheduleApi(request, id = 0):
     if request.method == 'GET':
@@ -65,3 +65,33 @@ def scheduleApi(request, id = 0):
         schedule = Schedules.objects.get(ClassId = id)
         schedule.delete()
         return JsonResponse("Class deleted!", safe = False)
+
+# Chapter
+@csrf_exempt
+def chapterApi(request, id = 0):
+    if request.method == 'GET':
+        chapters = Chapters.objects.all()
+        chapters_serializer = ChapterSerializer(chapters, many=True)
+        return JsonResponse(chapters_serializer.data, safe=False)
+    
+    elif request.method == 'POST':
+        chapter_data = JSONParser().parse(request)
+        chapters_serializer = ChapterSerializer(data = chapter_data)
+        if chapters_serializer.is_valid():
+            chapters_serializer.save()
+            return JsonResponse("Chapter added!",safe = False)
+        return JsonResponse("An error occured!",safe = False)
+
+    elif request.method == 'PUT':
+        chapter_data = JSONParser().parse(request)
+        chapter = Chapters.objects.get(ChapterId = chapter_data['ChapterId'])
+        chapters_serializer = ChapterSerializer(chapter, data = chapter_data)
+        if chapters_serializer.is_valid():
+            chapters_serializer.save()
+            return JsonResponse("Chapter updated", safe = False)
+        return JsonResponse("An error occured!")
+    
+    elif request.method == 'DELETE':
+        chapter = Chapters.objects.get(ChapterId = id)
+        chapter.delete()
+        return JsonResponse("Deleted", safe = False)

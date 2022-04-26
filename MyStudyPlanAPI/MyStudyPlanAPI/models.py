@@ -18,3 +18,12 @@ class Schedules(models.Model):
     ClassEndTime = models.CharField(max_length = 10)
     ClassLocation = models.CharField(max_length = 50)
     
+class Chapters(models.Model):
+    ChapterId = models.AutoField(primary_key = True)
+    ChapterName = models.CharField(max_length = 100)
+    ChapterStatus = models.CharField(
+        max_length = 20,
+        choices = (('New', 'New'), ('In Progress', 'In Progress'), ('Ready', 'Ready'), ('Completed', 'Completed')),
+        default = 'New'
+    )
+    ModuleId = models.IntegerField()
