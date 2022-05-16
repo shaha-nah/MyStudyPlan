@@ -68,16 +68,21 @@ def scheduleApi(request, id = 0):
 @csrf_exempt
 def chapterApi(request, id = 0):
     if request.method == 'GET':
-        chapters = Chapters.objects.all()
-        chapters_serializer = ChapterSerializer(chapters, many=True)
-        return JsonResponse(chapters_serializer.data, safe=False)
+        if id!=0:
+            chapters = Chapters.objects.filter(ModuleId=id)
+            chapters_serializer = ChapterSerializer(chapters, many=True)
+            return JsonResponse(chapters_serializer.data, safe=False)
+        else:
+            chapters = Chapters.objects.all()
+            chapters_serializer = ChapterSerializer(chapters, many=True)
+            return JsonResponse(chapters_serializer.data, safe=False)
     
     elif request.method == 'POST':
         chapter_data = JSONParser().parse(request)
         chapters_serializer = ChapterSerializer(data = chapter_data)
         if chapters_serializer.is_valid():
-            chapters_serializer.save()
-            return JsonResponse("Chapter added!",safe = False)
+            c = chapters_serializer.save()
+            return JsonResponse(c.ChapterId,safe = False)
         return JsonResponse("An error occured!",safe = False)
 
     elif request.method == 'PUT':
