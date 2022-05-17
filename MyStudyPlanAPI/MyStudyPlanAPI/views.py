@@ -4,8 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 
-from MyStudyPlanAPI.models import Modules, Schedules, Chapters, Tasks
-from MyStudyPlanAPI.serializers import ModuleSerializer, ScheduleSerializer, ChapterSerializer, TaskSerializer
+from MyStudyPlanAPI.models import Modules, Chapters, Tasks
+from MyStudyPlanAPI.serializers import ModuleSerializer, ChapterSerializer, TaskSerializer
 
 @csrf_exempt
 def moduleApi(request, id = 0):
@@ -35,35 +35,6 @@ def moduleApi(request, id = 0):
         module = Modules.objects.get(ModuleId = id)
         module.delete()
         return JsonResponse("Module deleted!", safe = False)
-
-@csrf_exempt
-def scheduleApi(request, id = 0):
-    if request.method == 'GET':
-        schedules = Schedules.objects.all()
-        schedules_serializer = ScheduleSerializer(schedules, many = True)
-        return JsonResponse(schedules_serializer.data, safe = False)
-
-    elif request.method == 'POST':
-        schedule_data = JSONParser().parse(request)
-        schedules_serializer = ScheduleSerializer(data = schedule_data)
-        if schedules_serializer.is_valid():
-            schedules_serializer.save()
-            return JsonResponse("Class added!", safe = False)
-        return JsonResponse("An error occured!", safe = False)
-    
-    elif request.method == 'PUT':
-        schedule_data = JSONParser().parse(request)
-        schedule = Schedules.objects.get(ClassId = schedule_data['ClassId'])
-        schedules_serializer = ScheduleSerializer(schedule, data = schedule_data)
-        if schedules_serializer.is_valid():
-            schedules_serializer.save()
-            return JsonResponse("Class updated!", safe = False)
-        return JsonResponse("An error occured!")
-
-    elif request.method == 'DELETE':
-        schedule = Schedules.objects.get(ClassId = id)
-        schedule.delete()
-        return JsonResponse("Class deleted!", safe = False)
 
 @csrf_exempt
 def chapterApi(request, id = 0):

@@ -1,22 +1,17 @@
 from django.db import models
+from datetime import datetime
 
 class Modules(models.Model):
     ModuleId = models.AutoField(primary_key = True)
     ModuleName = models.CharField(max_length = 100)
     ModuleCode = models.CharField(max_length = 10)
     ModuleLecturer = models.CharField(max_length = 50)
-
-class Schedules(models.Model):
-    ClassId = models.AutoField(primary_key = True)
-    ClassType = models.CharField(
-        max_length = 10,
-        choices = (('Lecture', 'Lecture'), ('Tutorial', 'Tutorial')),
-        default = 'Lecture'
+    ModuleStatus = models.CharField(
+        max_length = 20,
+        choices = (('Active', 'Active'), ('Completed', 'Completed')),
+        default = 'Active'
     )
-    ClassDay = models.CharField(max_length = 10)
-    ClassStartTime = models.CharField(max_length = 10)
-    ClassEndTime = models.CharField(max_length = 10)
-    ClassLocation = models.CharField(max_length = 50)
+    ModuleGrade = models.CharField(max_length=5, null=True)
     
 class Chapters(models.Model):
     ChapterId = models.AutoField(primary_key = True)
@@ -41,4 +36,5 @@ class Tasks(models.Model):
         choices = (('Class', 'Class'), ('Tutorial', 'Tutorial')),
         default = 'Class'
     )
+    TaskDueDate = models.DateField(default=str(datetime.today().date()))
     ChapterId = models.IntegerField()
