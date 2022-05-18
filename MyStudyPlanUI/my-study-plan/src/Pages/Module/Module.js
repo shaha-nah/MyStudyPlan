@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {variables} from '../../Variables.js';
-import './Module.css';
 
 export default class Module extends Component{
 
