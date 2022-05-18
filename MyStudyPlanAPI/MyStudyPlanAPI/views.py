@@ -8,9 +8,11 @@ from MyStudyPlanAPI.models import Modules, Chapters, Tasks
 from MyStudyPlanAPI.serializers import ModuleSerializer, ChapterSerializer, TaskSerializer
 
 @csrf_exempt
-def moduleApi(request, id = 0):
+def moduleApi(request, id = 0, *args):
     if request.method == 'GET':
         modules = Modules.objects.all()
+        # if request.headers['ModuleStatus']:
+        #     modules = modules.filter(ModuleStatus = request.headers['ModuleStatus'])
         modules_serializer = ModuleSerializer(modules, many = True)
         return JsonResponse(modules_serializer.data, safe = False)
     
@@ -41,12 +43,11 @@ def chapterApi(request, id = 0):
     if request.method == 'GET':
         if id!=0:
             chapters = Chapters.objects.filter(ModuleId=id)
-            chapters_serializer = ChapterSerializer(chapters, many=True)
-            return JsonResponse(chapters_serializer.data, safe=False)
         else:
             chapters = Chapters.objects.all()
-            chapters_serializer = ChapterSerializer(chapters, many=True)
-            return JsonResponse(chapters_serializer.data, safe=False)
+
+        chapters_serializer = ChapterSerializer(chapters, many=True)
+        return JsonResponse(chapters_serializer.data, safe=False)
     
     elif request.method == 'POST':
         chapter_data = JSONParser().parse(request)
@@ -73,7 +74,11 @@ def chapterApi(request, id = 0):
 @csrf_exempt
 def taskApi(request, id = 0):
     if request.method == 'GET':
-        tasks = Tasks.objects.all()
+        if id!=0:
+            tasks = Tasks.objects.filter(ChapterId=id)
+        else: 
+            tasks = Tasks.objects.all()
+            
         tasks_serializer = TaskSerializer(tasks, many=True)
         return JsonResponse(tasks_serializer.data, safe=False)
     

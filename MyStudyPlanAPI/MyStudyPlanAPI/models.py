@@ -11,7 +11,13 @@ class Modules(models.Model):
         choices = (('Active', 'Active'), ('Completed', 'Completed')),
         default = 'Active'
     )
+    ModuleType = models.CharField(
+        max_length = 10,
+        choices = (('Core', 'Core'), ('Workshop', 'Workshop')),
+        default = 'Core'
+    )
     ModuleGrade = models.CharField(max_length=5, null=True)
+    ModuleColor = models.CharField(max_length = 50)
     
 class Chapters(models.Model):
     ChapterId = models.AutoField(primary_key = True)

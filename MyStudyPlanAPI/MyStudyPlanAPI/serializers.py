@@ -5,7 +5,7 @@ from .models import Modules, Chapters, Tasks
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Modules
-        fields = ('ModuleId', 'ModuleName', 'ModuleCode', 'ModuleLecturer')
+        fields = ('ModuleId', 'ModuleName', 'ModuleCode', 'ModuleLecturer', 'ModuleStatus', 'ModuleGrade', 'ModuleColor', 'ModuleType')
 
 class ChapterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,4 +15,4 @@ class ChapterSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tasks
-        fields = ('TaskId', 'TaskName', 'TaskStatus', 'TaskType', 'ChapterId')
+        fields = ('TaskId', 'TaskName', 'TaskStatus', 'TaskType', 'ChapterId', 'TaskDueDate')
