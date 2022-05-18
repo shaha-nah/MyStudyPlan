@@ -1,10 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 
-import Home from './Module';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Module from './Module';
-
+import Module from './Pages/Module/Module';
+import Dashboard from './Pages/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -15,14 +13,24 @@ function App() {
         </h3>
 
         <Router>
-          <nav className = "navbar navbar-expand-sm bg-light navbar-dark">
+          <nav className = "navbar navbar-expand-sm bg-light navbar-dark justify-content-center">
             <ul className="navbar-nav">
-              <li className="nav-item- m-1">
+              <li className="nav-item m-1">
+                <Link className = 'btn btn-light btn-outline-primary' to = './'>Dashboard</Link>
+              </li>
+              <li className="nav-item m-1">
                 <Link className = 'btn btn-light btn-outline-primary' to = './Module'>Modules</Link>
+              </li>
+              <li className="nav-item m-1">
+                <Link className = 'btn btn-light btn-outline-primary' to = ''>Assignment</Link>
+              </li>
+              <li className="nav-item m-1">
+                <Link className = 'btn btn-light btn-outline-primary' to = ''>Exam</Link>
               </li>
             </ul>
           </nav>
           <Routes>
+            <Route path = '/' element = {<Dashboard/>} />
             <Route path = '/Module' element = {<Module/>} />
           </Routes>
         </Router>
