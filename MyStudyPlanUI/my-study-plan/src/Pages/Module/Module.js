@@ -343,23 +343,23 @@ export default class Module extends Component{
 
         <div className="modal fade" id="chapterModal" tabIndex="-1" aria-hidden="true">
           <div className="modal-dialog modal-lg modal-dialog-centered">
-            <div className="modal-content">
+            <div className="modal-content bg-dark border-light">
               <div className="modal-header">
                 <h5 className="modal-title">{modalTitle}</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" className="btn-close btn-dark" data-bs-dismiss="modal" aria-label="Close">
                 </button>
               </div>
 
               <div className="modal-body">
               <div className="input-group mb-3">
                   <span className="col-form-label col-sm-2">Module Id</span>
-                  <input type="text" className="form-control"
+                  <input type="text" className="form-control bg-dark text-white"
                     value={ModuleId}
                   />
                 </div>
                 <div className="input-group mb-3">
                   <span className="col-form-label col-sm-2">Chapter Name</span>
-                  <input type="text" className="form-control"
+                  <input type="text" className="form-control bg-dark text-white"
                     value={ChapterName}
                     onChange={this.changeChapterName} 
                   />
