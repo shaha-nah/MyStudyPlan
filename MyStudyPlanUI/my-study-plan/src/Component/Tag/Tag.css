@@ -1,9 +1,10 @@
 .tag{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 25px;
     max-width: fit-content;
     padding: 1px 5px;
     font-size: small;
     margin-top: 15px;
     text-transform: uppercase;
+    background-color: white;
 }

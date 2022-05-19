@@ -1,3 +1,4 @@
+from functools import partial
 import json
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -60,7 +61,7 @@ def chapterApi(request, id = 0):
     elif request.method == 'PUT':
         chapter_data = JSONParser().parse(request)
         chapter = Chapters.objects.get(ChapterId = chapter_data['ChapterId'])
-        chapters_serializer = ChapterSerializer(chapter, data = chapter_data)
+        chapters_serializer = ChapterSerializer(chapter, data = chapter_data, partial=True)
         if chapters_serializer.is_valid():
             chapters_serializer.save()
             return JsonResponse("Chapter updated!", safe = False)
@@ -93,7 +94,7 @@ def taskApi(request, id = 0):
     elif request.method == 'PUT':
         task_data = JSONParser().parse(request)
         task = Tasks.objects.get(TaskId = task_data['TaskId'])
-        tasks_serializer = TaskSerializer(task, data = task_data)
+        tasks_serializer = TaskSerializer(task, data = task_data, partial=True)
         if tasks_serializer.is_valid():
             tasks_serializer.save()
             return JsonResponse("Task updated!", safe = False)

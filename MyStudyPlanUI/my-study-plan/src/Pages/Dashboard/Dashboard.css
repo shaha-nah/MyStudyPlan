@@ -1,9 +1,11 @@
 .box{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 5px;
     text-align: left;
     padding: 10px;
     margin-top: 20px;
+    box-shadow: rgba(204, 203, 203, 0.15) 1.95px 1.95px 2.6px;
+    font-weight:900;
 }
 
 .title{
@@ -15,6 +17,8 @@
     font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
+    display:flex;
+
 }
 
 .subtitle span{
