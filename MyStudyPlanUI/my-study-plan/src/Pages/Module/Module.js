@@ -209,7 +209,7 @@ export default class Module extends Component{
           
         </div>
 
-        <table className = 'table table-stripped'>
+        <table className = 'table table-stripped table-dark'>
           <thead>
             <tr>
               <th>
@@ -232,7 +232,7 @@ export default class Module extends Component{
                 <td>{mod.ModuleName}</td>
                 <td>{mod.ModuleCode}</td>
                 <td>{mod.ModuleType}</td>
-                <button type="button" className="btn btn-light mr-1" 
+                <button type="button" className="btn btn-dark mr-1" 
                   data-bs-toggle="modal" data-bs-target="#moduleModal"
                   onClick={()=>this.editClick(mod)}
                   title="Edit"
@@ -243,7 +243,7 @@ export default class Module extends Component{
                   </svg>
                 </button>
 
-                <button type="button" className="btn btn-light mr-1" 
+                <button type="button" className="btn btn-dark mr-1" 
                   data-bs-toggle="modal" data-bs-target="#chapterModal"
                   onClick={()=>this.addChapter(mod)}
                   title="Add Chapter"
@@ -265,17 +265,17 @@ export default class Module extends Component{
 
         <div className="modal fade" id="moduleModal" tabIndex="-1" aria-hidden="true">
           <div className="modal-dialog modal-lg modal-dialog-centered">
-            <div className="modal-content">
+            <div className="modal-content bg-dark border-light">
               <div className="modal-header">
                 <h5 className="modal-title">{modalTitle}</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" className="btn-close btn-dark" data-bs-dismiss="modal" aria-label="Close">
                 </button>
               </div>
 
-              <div className="modal-body">
+              <div className="modal-body bg-dark">
                 <div className="input-group mb-3">
                   <span className="col-form-label col-sm-2">Module Name</span>
-                  <input type="text" className="form-control"
+                  <input type="text" className="form-control bg-dark text-white"
                     value={ModuleName}
                     onChange={this.changeModuleName} 
                   />
@@ -283,35 +283,35 @@ export default class Module extends Component{
 
                 <div className="input-group mb-3">
                   <span className="col-form-label col-sm-2">Module Code</span>
-                  <input type="text" className="form-control"
+                  <input type="text" className="form-control bg-dark text-white"
                     value={ModuleCode}
                     onChange={this.changeModuleCode} 
                   />
                 </div>
                 <div className="input-group mb-3">
                   <span className="col-form-label col-sm-2">Module Status</span>
-                  <input type="text" className="form-control"
+                  <input type="text" className="form-control bg-dark text-white"
                     value={ModuleStatus}
                     onChange={this.changeModuleStatus} 
                   />
                 </div>
                 <div className="input-group mb-3">
                   <span className="col-form-label col-sm-2">Module Type</span>
-                  <input type="text" className="form-control"
+                  <input type="text" className="form-control bg-dark text-white"
                     value={ModuleType}
                     onChange={this.changeModuleType} 
                   />
                 </div>
                 <div className="input-group mb-3">
                   <span className="col-form-label col-sm-2">Module Grade</span>
-                  <input type="text" className="form-control" 
+                  <input type="text" className="form-control bg-dark text-white" 
                     value={ModuleGrade ? ModuleGrade : ""}
                     onChange={this.changeModuleGrade} 
                   />
                 </div>
                 <div className="input-group mb-3">
                   <span className="col-form-label col-sm-2">Module Color</span>
-                  <input type="text" className="form-control" 
+                  <input type="text" className="form-control bg-dark text-white" 
                     value={ModuleColor}
                     onChange={this.changeModuleColor} 
                   />
