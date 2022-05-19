@@ -2,7 +2,18 @@ import React from 'react';
 import '../Tag.css';
 import {variables} from '../../../Variables';
 
+function toTitleCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
+  }
+
 function editTaskStatus(taskId, taskName, taskStatus, chapterId){
+    taskStatus = toTitleCase(taskStatus);
+    
     fetch(variables.API_URL+'task',{
         method:'PUT',
         headers:{
