@@ -10,7 +10,10 @@ export default class Module extends Component{
       modalTitle:"",
       ModuleName:"",
       ModuleCode:"",
-      moduleLecturer:"",
+      ModuleStatus:"",
+      ModuleType:"",
+      ModuleGrade:"",
+      ModuleColor:"",
       ChapterName:""
     }
   }
@@ -35,8 +38,20 @@ export default class Module extends Component{
     this.setState({ModuleCode: e.target.value});
   }
 
-  changeModuleLecturer = (e) => {
-    this.setState({ModuleLecturer: e.target.value});
+  changeModuleStatus = (e) => {
+    this.setState({ModuleStatus: e.target.value});
+  }
+
+  changeModuleType = (e) => {
+    this.setState({ModuleType: e.target.value});
+  }
+
+  changeModuleGrade = (e) => {
+    this.setState({ModuleGrade: e.target.value});
+  }
+
+  changeModuleColor = (e) => {
+    this.setState({ModuleColor: e.target.value});
   }
 
   changeChapterName = (e) => {
@@ -49,7 +64,10 @@ export default class Module extends Component{
       ModuleId:0,
       ModuleName:"",
       ModuleCode:"",
-      ModuleLecturer:"",
+      ModuleStatus:"",
+      ModuleType:"",
+      ModuleGrade:"",
+      ModuleColor:""
     });
   }
 
@@ -59,7 +77,10 @@ export default class Module extends Component{
       ModuleId:mod.ModuleId,
       ModuleName:mod.ModuleName,
       ModuleCode:mod.ModuleCode,
-      ModuleLecturer:mod.ModuleLecturer
+      ModuleStatus:mod.ModuleStatus,
+      ModuleType:mod.ModuleType,
+      ModuleGrade:mod.ModuleGrade,
+      ModuleColor:mod.ModuleColor
     });
   }
 
@@ -73,7 +94,10 @@ export default class Module extends Component{
       body:JSON.stringify({
         ModuleName:this.state.ModuleName,
         ModuleCode:this.state.ModuleCode,
-        ModuleLecturer:this.state.ModuleLecturer
+        ModuleStatus:this.state.ModuleStatus,
+        ModuleType:this.state.ModuleType,
+        ModuleGrade:this.state.ModuleGrade,
+        ModuleColor:this.state.ModuleColor
       })
     })
     .then(res=>res.json())
@@ -96,7 +120,10 @@ export default class Module extends Component{
         ModuleId:this.state.ModuleId,
         ModuleName:this.state.ModuleName,
         ModuleCode:this.state.ModuleCode,
-        ModuleLecturer:this.state.ModuleLecturer
+        ModuleStatus:this.state.ModuleStatus,
+        ModuleType:this.state.ModuleType,
+        ModuleGrade:this.state.ModuleGrade,
+        ModuleColor:this.state.ModuleColor
       })
     })
     .then(res=>res.json())
@@ -104,7 +131,7 @@ export default class Module extends Component{
       alert(result);
       this.refreshList();
     }, (error)=>{
-      alert('Failed');
+      alert(error);
     })
   }
 
@@ -168,7 +195,10 @@ export default class Module extends Component{
       ModuleId,
       ModuleName,
       ModuleCode,
-      ModuleLecturer,
+      ModuleStatus,
+      ModuleType,
+      ModuleGrade,
+      ModuleColor,
       ChapterName
     }=this.state;
     
@@ -189,7 +219,7 @@ export default class Module extends Component{
                 Module Code
               </th>
               <th>
-                Lecturer
+                Type
               </th>
               <th>
                 Options
@@ -201,7 +231,7 @@ export default class Module extends Component{
               <tr key={mod.ModuleId}>
                 <td>{mod.ModuleName}</td>
                 <td>{mod.ModuleCode}</td>
-                <td>{mod.ModuleLecturer}</td>
+                <td>{mod.ModuleType}</td>
                 <button type="button" className="btn btn-light mr-1" 
                   data-bs-toggle="modal" data-bs-target="#moduleModal"
                   onClick={()=>this.editClick(mod)}
@@ -230,7 +260,7 @@ export default class Module extends Component{
         <button type="button" className="btn btn-primary m-2 float-end" 
             data-bs-toggle="modal" data-bs-target="#moduleModal"
             onClick={()=>this.addClick()}>
-              Add Module
+              +
         </button>
 
         <div className="modal fade" id="moduleModal" tabIndex="-1" aria-hidden="true">
@@ -244,7 +274,7 @@ export default class Module extends Component{
 
               <div className="modal-body">
                 <div className="input-group mb-3">
-                  <span className="input-group-text">Module Name</span>
+                  <span className="col-form-label col-sm-2">Module Name</span>
                   <input type="text" className="form-control"
                     value={ModuleName}
                     onChange={this.changeModuleName} 
@@ -252,19 +282,41 @@ export default class Module extends Component{
                 </div>
 
                 <div className="input-group mb-3">
-                  <span className="input-group-text">Module Code</span>
+                  <span className="col-form-label col-sm-2">Module Code</span>
                   <input type="text" className="form-control"
                     value={ModuleCode}
                     onChange={this.changeModuleCode} 
                   />
                 </div>
                 <div className="input-group mb-3">
-                  <span className="input-group-text">Lecturer Name</span>
+                  <span className="col-form-label col-sm-2">Module Status</span>
                   <input type="text" className="form-control"
-                    value={ModuleLecturer}
-                    onChange={this.changeModuleLecturer} 
+                    value={ModuleStatus}
+                    onChange={this.changeModuleStatus} 
                   />
                 </div>
+                <div className="input-group mb-3">
+                  <span className="col-form-label col-sm-2">Module Type</span>
+                  <input type="text" className="form-control"
+                    value={ModuleType}
+                    onChange={this.changeModuleType} 
+                  />
+                </div>
+                <div className="input-group mb-3">
+                  <span className="col-form-label col-sm-2">Module Grade</span>
+                  <input type="text" className="form-control" 
+                    value={ModuleGrade ? ModuleGrade : ""}
+                    onChange={this.changeModuleGrade} 
+                  />
+                </div>
+                <div className="input-group mb-3">
+                  <span className="col-form-label col-sm-2">Module Color</span>
+                  <input type="text" className="form-control" 
+                    value={ModuleColor}
+                    onChange={this.changeModuleColor} 
+                  />
+                </div>
+                
 
                 {ModuleId===0
                   ?
@@ -300,13 +352,13 @@ export default class Module extends Component{
 
               <div className="modal-body">
               <div className="input-group mb-3">
-                  <span className="input-group-text">Module Id</span>
+                  <span className="col-form-label col-sm-2">Module Id</span>
                   <input type="text" className="form-control"
                     value={ModuleId}
                   />
                 </div>
                 <div className="input-group mb-3">
-                  <span className="input-group-text">Chapter Name</span>
+                  <span className="col-form-label col-sm-2">Chapter Name</span>
                   <input type="text" className="form-control"
                     value={ChapterName}
                     onChange={this.changeChapterName} 

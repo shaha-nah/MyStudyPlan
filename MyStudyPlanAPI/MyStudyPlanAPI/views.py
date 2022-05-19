@@ -8,7 +8,7 @@ from MyStudyPlanAPI.models import Modules, Chapters, Tasks
 from MyStudyPlanAPI.serializers import ModuleSerializer, ChapterSerializer, TaskSerializer
 
 @csrf_exempt
-def moduleApi(request, id = 0, *args):
+def moduleApi(request, id = 0):
     if request.method == 'GET':
         modules = Modules.objects.all()
         # if request.headers['ModuleStatus']:

@@ -5,7 +5,6 @@ class Modules(models.Model):
     ModuleId = models.AutoField(primary_key = True)
     ModuleName = models.CharField(max_length = 100)
     ModuleCode = models.CharField(max_length = 10)
-    ModuleLecturer = models.CharField(max_length = 50)
     ModuleStatus = models.CharField(
         max_length = 20,
         choices = (('Active', 'Active'), ('Completed', 'Completed')),
