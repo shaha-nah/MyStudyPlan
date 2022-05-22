@@ -32,7 +32,29 @@ export default class Dashboard extends Component{
     //   this.refreshChapters();
   }
 
+  setModuleActive(boxId){
+    var boxes =  document.getElementsByClassName("module");
+    for (let i = 0; i<boxes.length; i++){
+        boxes[i].style.border = "None"
+    }
+
+    boxes = document.getElementsByClassName("chapter");
+    for (let i = 0; i<boxes.length; i++){
+        boxes[i].style.border = "None"
+    }
+    document.getElementById(boxId).style.border = "3px solid white";
+  }
+
+  setChapterActive(boxId){
+    var boxes =  document.getElementsByClassName("chapter");
+    for (let i = 0; i<boxes.length; i++){
+        boxes[i].style.border = "None"
+    }
+    document.getElementById(boxId).style.border = "3px solid white";
+  }
+
   openChapters(ModuleId){
+    this.setModuleActive(ModuleId);
     this.setState({tasks:[]});
     fetch(variables.API_URL+'chapter/'+ModuleId)
     .then(response=>response.json())
@@ -42,6 +64,7 @@ export default class Dashboard extends Component{
   }
 
   openTasks(ChapterId){
+    this.setChapterActive(ChapterId);
     fetch(variables.API_URL+'task/'+ChapterId)
     .then(response=>response.json())
     .then(data=>{
@@ -152,7 +175,9 @@ export default class Dashboard extends Component{
                     const color = `${module.ModuleColor}`;
 
                     return (
-                        <div className="box" onClick={()=>this.openChapters(module.ModuleId)} style={{backgroundColor: color}}>
+                        <div className="box module" onClick={()=>this.openChapters(module.ModuleId)} 
+                            style={{backgroundColor: color}} id={module.ModuleId}
+                        >
                             <div className="title">
                                 {module.ModuleName}
                             </div>
@@ -187,7 +212,9 @@ export default class Dashboard extends Component{
                     }
 
                     return (
-                        <div className="box" onClick={()=>this.openTasks(chapter.ChapterId)} style={{backgroundColor: color}}>
+                        <div className="box chapter" onClick={()=>this.openTasks(chapter.ChapterId)} 
+                            style={{backgroundColor: color}} id={chapter.ChapterId}
+                        >
                             <div className="title">
                                 {chapter.ChapterName}
                             </div>
