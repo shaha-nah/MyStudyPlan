@@ -5,15 +5,16 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 
-from MyStudyPlanAPI.models import Modules, Chapters, Tasks
-from MyStudyPlanAPI.serializers import ModuleSerializer, ChapterSerializer, TaskSerializer
+from MyStudyPlanAPI.models import Modules, Chapters, Tasks, Assessments
+from MyStudyPlanAPI.serializers import ModuleSerializer, ChapterSerializer, TaskSerializer, AssessmentSerializer
 
 @csrf_exempt
 def moduleApi(request, id = 0):
     if request.method == 'GET':
-        modules = Modules.objects.all()
-        # if request.headers['ModuleStatus']:
-        #     modules = modules.filter(ModuleStatus = request.headers['ModuleStatus'])
+        if id!=0:
+            modules = Modules.objects.filter(ModuleId=id)
+        else:
+            modules = Modules.objects.all()
         modules_serializer = ModuleSerializer(modules, many = True)
         return JsonResponse(modules_serializer.data, safe = False)
     
@@ -104,3 +105,32 @@ def taskApi(request, id = 0):
         task = Tasks.objects.get(TaskId = id)
         task.delete()
         return JsonResponse("Task deleted!", safe = False)
+
+@csrf_exempt
+def assessmentApi(request, id = 0):
+    if request.method == 'GET':
+        assessments = Assessments.objects.all()
+        assessments_serializer = AssessmentSerializer(assessments, many=True)
+        return JsonResponse(assessments_serializer.data, safe=False)
+    
+    elif request.method == 'POST':
+        assessment_data = JSONParser().parse(request)
+        assessments_serializer = AssessmentSerializer(data = assessment_data)
+        if assessments_serializer.is_valid():
+            assessments_serializer.save()
+            return JsonResponse("Assessment Added!", safe = False)
+        return JsonResponse("An error occured!")
+    
+    elif request.method == 'PUT':
+        assessment_data = JSONParser().parse(request)
+        assessment = Assessments.objects.get(AssessmentId = assessment_data['AssessmentId'])
+        assessments_serializer = AssessmentSerializer(assessment, data = assessment_data, partial=True)
+        if assessments_serializer.is_valid():
+            assessments_serializer.save()
+            return JsonResponse("Assessment updated!", safe = False)
+        return JsonResponse("An error occured!")
+    
+    elif request.method == 'DELETE':
+        assessment = Assessments.objects.get(AssessmentId = id)
+        assessment.delete()
+        return JsonResponse("Assessment deleted!", safe = False)

@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Module from './Pages/Module/Module';
 import Dashboard from './Pages/Dashboard/Dashboard';
+import Assessment from './Pages/Assessment/Assessment';
 
 function App() {
   return (
@@ -22,13 +23,14 @@ function App() {
                 <Link className = 'btn btn-dark btn-outline-primary' to = './Module'>Modules</Link>
               </li>
               <li className="nav-item m-1">
-                <Link className = 'btn btn-dark btn-outline-primary' to = ''>Assignment</Link>
+                <Link className = 'btn btn-dark btn-outline-primary' to = './Assessment'>Assessment</Link>
               </li>
             </ul>
           </nav>
           <Routes>
             <Route path = '/' element = {<Dashboard/>} />
             <Route path = '/Module' element = {<Module/>} />
+            <Route path = '/Assessment' element = {<Assessment/>} />
           </Routes>
         </Router>
       </div>

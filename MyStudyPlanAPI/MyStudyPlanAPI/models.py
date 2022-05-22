@@ -43,3 +43,21 @@ class Tasks(models.Model):
     )
     TaskDueDate = models.DateField(default=str(datetime.today().date()))
     ChapterId = models.IntegerField()
+
+class Assessments(models.Model):
+    AssessmentId = models.AutoField(primary_key = True)
+    AssessmentName = models.CharField(max_length=100)
+    ModuleColor = models.CharField(max_length = 50)
+    AssessmentDate = models.DateField(default=str(datetime.today().date()))
+    AssessmentType = models.CharField(
+        max_length = 15,
+        choices = (('Assignment', 'Assignment'), ('Test', 'Test')),
+        default = 'Assignment'
+    )
+    AssessmentDetails = models.CharField(max_length=1000)
+    AssessmentGrade = models.CharField(max_length=2)
+    AssessmentStatus = models.CharField(
+        max_length = 10,
+        choices = (('Due', 'Due'), ('Done', 'Done')),
+        default = 'Due'
+    )

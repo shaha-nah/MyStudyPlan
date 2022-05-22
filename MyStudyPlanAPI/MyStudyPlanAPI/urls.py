@@ -27,5 +27,8 @@ urlpatterns = [
     re_path(r'^chapter/([0-9]+)$', views.chapterApi),
 
     re_path(r'^task$', views.taskApi),
-    re_path(r'^task/([0-9]+)$', views.taskApi)
+    re_path(r'^task/([0-9]+)$', views.taskApi),
+
+    re_path(r'^assessment$', views.assessmentApi),
+    re_path(r'^assessment/([0-9]+)$', views.assessmentApi)
 ]
