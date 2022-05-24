@@ -116,10 +116,10 @@ export default class Assessment extends Component{
       })
     })
     .then(res=>res.json())
-    .then((result)=>{
-      alert(result)
+    .then(()=>{
+      window.location.reload();
     }, (error)=>{
-      alert(error);
+      console.log(error);
     })
   }
 
@@ -142,11 +142,10 @@ export default class Assessment extends Component{
       })
     })
     .then(res=>res.json())
-    .then((result)=>{
-      alert(result);
-      this.refreshList();
+    .then(()=>{
+      window.location.reload();
     }, (error)=>{
-      alert(error);
+      console.log(error);
     })
   }
 
@@ -181,7 +180,11 @@ export default class Assessment extends Component{
           <div className="col">
             <h4>Assignment</h4>
             <div>
-              {assessments.filter(assessments=>assessments.AssessmentType === 'Assignment' && assessments.AssessmentStatus=="Due").map(assessment=>{
+              {assessments.filter(assessments=>assessments.AssessmentType === 'Assignment' && assessments.AssessmentStatus === "Due")
+              .sort((a, b) => 
+                a.AssessmentDate > b.AssessmentDate ? 1 : -1
+              )
+              .map(assessment=>{
                 return (
                   <div className="assessmentBox" style={{backgroundColor: `${assessment.ModuleColor}`}}>
                     <div className="title">
@@ -198,8 +201,8 @@ export default class Assessment extends Component{
                       </button>
                     </div>
                     <div>
-                      <span><i class="fa-regular fa-clock-four mb-4"></i></span>
-                      {assessment.AssessmentDate}
+                      <span><i class="fa-regular fa-clock-four m-1 mb-4"></i></span>
+                      { (new Date(assessment.AssessmentDate)).toLocaleDateString('en-US', {day: "numeric", month:"long"}) }
                     </div>
                     <div>
                       {assessment.AssessmentDetails}
@@ -213,7 +216,11 @@ export default class Assessment extends Component{
           <div className="col">
             <h4>Test</h4>
             <div>
-              {assessments.filter(assessments=>assessments.AssessmentType === 'Test' && assessments.AssessmentStatus=="Due").map(assessment=>{
+              {assessments.filter(assessments=>assessments.AssessmentType === 'Test' && assessments.AssessmentStatus === "Due")
+              .sort((a, b) => 
+                a.AssessmentDate > b.AssessmentDate ? 1 : -1
+              )
+              .map(assessment=>{
                 return (
                   <div className="assessmentBox" style={{backgroundColor: `${assessment.ModuleColor}`}}>
                     <div className="title">
@@ -230,8 +237,8 @@ export default class Assessment extends Component{
                       </button>
                     </div>
                     <div>
-                      <span><i class="fa-regular fa-clock-four mb-4"></i></span>
-                      {assessment.AssessmentDate}
+                      <span><i class="fa-regular fa-clock-four mb-4 m-1 mb-4"></i></span>
+                      { (new Date(assessment.AssessmentDate)).toLocaleDateString('en-US', {day: "numeric", month:"long"}) }
                     </div>
                     <div>
                       {assessment.AssessmentDetails}
@@ -245,7 +252,11 @@ export default class Assessment extends Component{
           <div className="col">
             <h4>Complete</h4>
             <div>
-              {assessments.filter(assessments=>assessments.AssessmentStatus === "Done").map(assessment=>{
+              {assessments.filter(assessments=>assessments.AssessmentStatus === "Done")
+              .sort((a, b) => 
+                a.AssessmentDate > b.AssessmentDate ? 1 : -1
+              )
+              .map(assessment=>{
                 return (
                   <div className="assessmentBox" style={{backgroundColor: `${assessment.ModuleColor}`}}>
                     <div className="title">
@@ -262,8 +273,8 @@ export default class Assessment extends Component{
                       </button>
                     </div>
                     <div>
-                      <span><i class="fa-regular fa-clock-four"></i></span>
-                      {assessment.AssessmentDate}
+                      <span><i class="fa-regular fa-clock-four m-1 mb-4"></i></span>
+                      { (new Date(assessment.AssessmentDate)).toLocaleDateString('en-US', {day: "numeric", month:"long"}) }
                     </div>
                     <div className="grades mb-4">
                       {assessment.AssessmentGrade}
