@@ -101,11 +101,10 @@ export default class Module extends Component{
       })
     })
     .then(res=>res.json())
-    .then((result)=>{
-      alert(result);
-      this.refreshList();
+    .then(()=>{
+      window.location.reload();
     }, (error)=>{
-      alert('Failed');
+      console.log(error);
     })
   }
 
@@ -127,11 +126,10 @@ export default class Module extends Component{
       })
     })
     .then(res=>res.json())
-    .then((result)=>{
-      alert(result);
-      this.refreshList();
+    .then(()=>{
+      window.location.reload();
     }, (error)=>{
-      alert(error);
+      console.log(error);
     })
   }
 
@@ -161,8 +159,9 @@ export default class Module extends Component{
       this.createTask(ChapterId, 'Notes');
       this.createTask(ChapterId, 'Summary');
       this.createTask(ChapterId, 'Revision');
+      window.location.reload();
     }, (error)=>{
-      alert('Failed');
+      console.log(error);
     })
   }
 
@@ -181,10 +180,10 @@ export default class Module extends Component{
       })
     })
     .then(res=>res.json())
-    .then((result)=>{
+    .then(()=>{
       
     }, (error)=>{
-      alert('Failed');
+      console.log(error);
     })
   }
 
@@ -232,7 +231,7 @@ export default class Module extends Component{
                 <td>{mod.ModuleName}</td>
                 <td>{mod.ModuleCode}</td>
                 <td>{mod.ModuleType}</td>
-                <button type="button" className="btn btn-dark mr-1" 
+                <button type="button" className="btn btn-dark m-1" 
                   data-bs-toggle="modal" data-bs-target="#moduleModal"
                   onClick={()=>this.editClick(mod)}
                   title="Edit"
@@ -243,7 +242,7 @@ export default class Module extends Component{
                   </svg>
                 </button>
 
-                <button type="button" className="btn btn-dark mr-1" 
+                <button type="button" className="btn btn-dark m-1" 
                   data-bs-toggle="modal" data-bs-target="#chapterModal"
                   onClick={()=>this.addChapter(mod)}
                   title="Add Chapter"
