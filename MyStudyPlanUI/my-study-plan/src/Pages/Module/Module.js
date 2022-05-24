@@ -351,7 +351,7 @@ export default class Module extends Component{
               </div>
 
               <div className="modal-body">
-              <div className="input-group mb-3">
+                <div className="input-group mb-3">
                   <span className="col-form-label col-sm-2">Module Id</span>
                   <input type="text" className="form-control bg-dark text-white"
                     value={ModuleId}

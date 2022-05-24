@@ -159,11 +159,8 @@ export default class Dashboard extends Component{
         modules,
         chapters,
         tasks,
-        TaskId,
-        TaskName,
         TaskDueDate,
-        TaskStatus,
-        ChapterId
+        TaskStatus
     }=this.state;
 
     return (

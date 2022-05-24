@@ -181,7 +181,7 @@ export default class Assessment extends Component{
           <div className="col">
             <h4>Assignment</h4>
             <div>
-              {assessments.filter(assessments=>assessments.AssessmentType == 'Assignment' && assessments.AssessmentStatus=="Due").map(assessment=>{
+              {assessments.filter(assessments=>assessments.AssessmentType === 'Assignment' && assessments.AssessmentStatus=="Due").map(assessment=>{
                 return (
                   <div className="assessmentBox" style={{backgroundColor: `${assessment.ModuleColor}`}}>
                     <div className="title">
@@ -213,7 +213,7 @@ export default class Assessment extends Component{
           <div className="col">
             <h4>Test</h4>
             <div>
-              {assessments.filter(assessments=>assessments.AssessmentType == 'Test' && assessments.AssessmentStatus=="Due").map(assessment=>{
+              {assessments.filter(assessments=>assessments.AssessmentType === 'Test' && assessments.AssessmentStatus=="Due").map(assessment=>{
                 return (
                   <div className="assessmentBox" style={{backgroundColor: `${assessment.ModuleColor}`}}>
                     <div className="title">
@@ -245,7 +245,7 @@ export default class Assessment extends Component{
           <div className="col">
             <h4>Complete</h4>
             <div>
-              {assessments.filter(assessments=>assessments.AssessmentStatus=="Done").map(assessment=>{
+              {assessments.filter(assessments=>assessments.AssessmentStatus === "Done").map(assessment=>{
                 return (
                   <div className="assessmentBox" style={{backgroundColor: `${assessment.ModuleColor}`}}>
                     <div className="title">
