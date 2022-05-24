@@ -11,6 +11,7 @@ export default class Dashboard extends Component{
         modules:[],
         chapters:[],
         tasks:[],
+        modalTitle:"",
         TaskId:"",
         TaskName:"",
         TaskDueDate:"",
@@ -81,19 +82,41 @@ export default class Dashboard extends Component{
       },
       body:JSON.stringify({
         TaskId:this.state.TaskId,
+        TaskName:this.state.TaskName,
         TaskDueDate:this.state.TaskDueDate,
         TaskStatus:this.state.TaskStatus
       })
     })
     .then(res=>res.json())
     .then((result)=>{
-      alert(result);
-      this.refreshList();
+      console.log(result);
     }, (error)=>{
-      alert(error);
+      console.log(error);
     });
-
     this.updateChapter(this.state.TaskName, this.state.TaskStatus, this.state.ChapterId);
+    this.openTasks(this.state.ChapterId);
+  }
+
+  createTask(){
+    fetch(variables.API_URL+'task',{
+      method:'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({
+        TaskName:this.state.TaskName,
+        TaskDueDate:this.state.TaskDueDate,
+        TaskStatus:this.state.TaskStatus,
+        ChapterId:this.state.ChapterId
+      })
+    })
+    .then(res=>res.json())
+    .then(()=>{
+      this.openTasks(this.state.ChapterId);
+    }, (error)=>{
+      console.log(error);
+    })
   }
 
   updateChapter(taskName, taskStatus, chapterId){
@@ -129,10 +152,9 @@ export default class Dashboard extends Component{
     })
         .then(res=>res.json())
         .then((result)=>{
-        alert(result);
-        this.refreshList();
+        console.log(result);
     }, (error)=>{
-        alert(error);
+        console.log(error);
     })
   }
 
@@ -144,8 +166,13 @@ export default class Dashboard extends Component{
     this.setState({TaskStatus:e.target.value});
   }
 
+  changeTaskName = (e) => {
+    this.setState({TaskName:e.target.value});
+  }
+
   editClick(task){
       this.setState({
+        modalTitle: "Update Task",
         TaskId: task.TaskId,
         TaskName: task.TaskName,
         TaskDueDate: task.TaskDueDate,
@@ -154,11 +181,40 @@ export default class Dashboard extends Component{
       });
   }
 
+  deleteClick(task){
+    fetch(variables.API_URL+'task/'+task.TaskId, {
+        method: "DELETE",
+        headers: {
+            'Content-type': 'application/json'
+        }
+    })
+    .then(res=>res.json())
+    .then((result)=>{
+      console.log(result);
+    }, (error)=>{
+      console.log(error);
+    });
+  }
+
+  addClick(chapter){
+    this.setState({
+      modalTitle: "Add Task",
+      TaskId: 0,
+      TaskName: "",
+      TaskDueDate: "",
+      TaskStatus: "New",
+      ChapterId: chapter.ChapterId
+    });
+  }
+
   render(){
     const {
         modules,
         chapters,
         tasks,
+        modalTitle,
+        TaskId,
+        TaskName,
         TaskDueDate,
         TaskStatus
     }=this.state;
@@ -214,6 +270,15 @@ export default class Dashboard extends Component{
                         >
                             <div className="title">
                                 {chapter.ChapterName}
+                                <button type="button" className="btn float-end" 
+                                    data-bs-toggle="modal" data-bs-target="#taskModal"
+                                    onClick={()=>this.addClick(chapter)}
+                                    title="Add"
+                                    >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                    </svg>
+                                </button>
                             </div>
                             <Tag TagText={chapter.ChapterStatus} TextColor={color} />
                         </div>
@@ -248,6 +313,14 @@ export default class Dashboard extends Component{
                             <div className="title">
                                 {task.TaskName}
                                 <button type="button" className="btn float-end" 
+                                    onClick={()=>this.deleteClick(task)}
+                                    title="Delete"
+                                    >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                    </svg>
+                                </button>
+                                <button type="button" className="btn float-end" 
                                     data-bs-toggle="modal" data-bs-target="#taskModal"
                                     onClick={()=>this.editClick(task)}
                                     title="Edit"
@@ -275,12 +348,19 @@ export default class Dashboard extends Component{
           <div className="modal-dialog modal-lg modal-dialog-centered">
             <div className="modal-content bg-dark border-light">
               <div className="modal-header">
-                <h5 className="modal-title">Update Task</h5>
+                <h5 className="modal-title">{modalTitle}</h5>
                 <button type="button" className="btn-close btn-dark" data-bs-dismiss="modal" aria-label="Close">
                 </button>
               </div>
 
               <div className="modal-body">
+              <div className="input-group mb-3">
+                  <span className="col-form-label col-sm-2">Task Name</span>
+                  <input type="text" className="form-control bg-dark text-white"
+                    value={TaskName}
+                    onChange={this.changeTaskName}
+                  />
+                </div>
                 <div className="input-group mb-3">
                   <span className="col-form-label col-sm-2">Task Date</span>
                   <input type="date" className="form-control bg-dark text-white"
@@ -303,12 +383,26 @@ export default class Dashboard extends Component{
                     <option value="Completed">Completed</option>
                   </select>
                 </div>
-
-                <button type="button"
+                
+                {TaskId===0
+                  ?
+                  <button type="button"
                   className="btn btn-primary float-start"
-                  onClick={()=>this.updateTask()}>
-                    Update
+                  onClick={()=>this.createTask()}>
+                    Create
                 </button>
+                  : null
+                }
+
+                {TaskId!==0
+                  ?
+                  <button type="button"
+                    className="btn btn-primary float-start"
+                    onClick={()=>this.updateTask()}>
+                      Update
+                  </button>
+                  : null
+                }
               </div>
             </div>
           </div>
